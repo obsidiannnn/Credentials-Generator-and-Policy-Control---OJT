@@ -1,91 +1,144 @@
-🔐 SecurePass Studio
+# 🔐 SecurePass Studio
 
-SecurePass Studio is an all-in-one password generator web app designed to create secure, customizable passwords, analyze their strength, manage password history, and even test your typing skills with a Password Challenge mini-game.
-It also includes an AI-powered password generator using Google’s Gemini API for intelligent suggestions
+A modern, feature-rich password generator with AI assistance, strength analysis, and an interactive typing game.
 
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 
-🚀 Features
-🧩 Password Generator
+## ✨ Features
 
-Generate strong, customizable passwords.
+### 🛡️ Password Generation
+- Customizable password length (4-128 characters)
+- Minimum requirements for uppercase, lowercase, digits, and symbols
+- Option to avoid similar characters (I, l, 1, 0, O)
+- No repeating characters option
+- One-click copy to clipboard
 
-Adjust length, uppercase, lowercase, digits, and symbols.
+### 📊 Strength Analysis
+- Real-time entropy calculation in bits
+- Visual 5-segment strength meter
+- Strength labels: Weak → Fair → Good → Strong → Very Strong
 
-Options to:
+### 🤖 AI-Powered Generation
+- Natural language password generation using Google Gemini API
+- Describe what you need, get a custom secure password
+- Example: "A strong password for my bank account"
 
-Avoid similar characters (like I, l, 1, 0, O)
+### 📜 Password History
+- Local storage persistence
+- Search and filter functionality
+- Sort by: newest, oldest, strongest, weakest, longest, shortest
+- Pagination support
+- Quick copy and delete actions
 
-Prevent repeating characters.
+### 🎮 Password Challenge Game
+- Test your typing speed and accuracy
+- Progressive difficulty (passwords get longer each level)
+- Score tracking with high score persistence
+- 10-second timer per round
 
-Strength meter with entropy-based analysis (in bits).
+### 🎨 User Experience
+- Light/Dark theme toggle
+- Fully responsive design (mobile, tablet, desktop)
+- Keyboard shortcuts for power users
+- Smooth animations and transitions
+- Accessibility compliant
 
-Copy to clipboard instantly.
+## ⌨️ Keyboard Shortcuts
 
-Auto-save generated passwords to local storage
+| Key | Action |
+|-----|--------|
+| `G` | Generate password |
+| `C` | Copy password |
+| `T` | Toggle theme |
+| `H` | Toggle password visibility |
+| `/` | Focus search |
+| `?` | Show help modal |
+| `Esc` | Close modal |
 
+## 🚀 Getting Started
 
-🤖 AI Password Assistant
+### Prerequisites
+- Modern web browser (Chrome, Firefox, Safari, Edge)
+- Google Gemini API key (for AI features)
 
-Describe your needs, and AI will create a password tailored for you.
+### Installation
 
-Uses Gemini Pro API (replace placeholder API key in script.js).
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/securepass-studio.git
+cd securepass-studio
+```
 
-Secure, intelligent, and creative generation
+2. Open `index.html` in your browser, or serve with a local server:
+```bash
+# Using Python
+python -m http.server 8000
 
+# Using Node.js
+npx serve
+```
 
-🎮 Password Challenge Game
+3. (Optional) Add your Gemini API key in `script.js` for AI features:
+```javascript
+const GEMINI_API_KEY = 'your-api-key-here';
+```
 
-Type passwords as fast as you can before time runs out.
+## 📁 Project Structure
 
-Score points, level up, and aim for a new high score.
+```
+securepass-studio/
+├── index.html      # Main HTML structure
+├── main.css        # Styles and theming
+├── script.js       # Application logic
+└── README.md       # Documentation
+```
 
-Interactive and fun — improves your typing accuracy and speed
+## 🔧 Configuration
 
+### Gemini API Setup
+1. Visit [Google AI Studio](https://aistudio.google.com/)
+2. Create a new API key
+3. Replace the API key in `script.js`
 
-📜 Password History
+### Theme Customization
+Modify CSS variables in `main.css`:
+```css
+:root {
+  --accent: #c45d35;      /* Primary accent color */
+  --success: #4a9d5b;     /* Success state */
+  --warning: #c98a2e;     /* Warning state */
+  --error: #c94a4a;       /* Error state */
+}
+```
 
-Every generated password is saved locally.
+## 🛠️ Tech Stack
 
-Sort by newest, oldest, strongest, weakest, longest, or shortest.
+- **HTML5** - Semantic markup
+- **CSS3** - Custom properties, Grid, Flexbox
+- **Vanilla JavaScript** - No dependencies
+- **Google Gemini API** - AI password generation
+- **LocalStorage** - Data persistence
 
-Search through saved passwords.
+## 📱 Browser Support
 
-Copy or delete passwords.
+- Chrome 80+
+- Firefox 75+
+- Safari 13+
+- Edge 80+
 
-Paginated view for better browsing.
+## 👥 Authors
 
+- **Harsh Saini**
+- **Aditya Chauhan**
 
-🌓 Light & Dark Mode
+## 📄 License
 
-Persistent theme toggle saved in local storage.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🙏 Acknowledgments
 
-🧠 Developer Notes
-
-Uses localStorage for storing:
-
-Password history
-
-Theme preference
-
-Game high score
-
-Fully responsive for mobile, tablet, and desktop.
-
-Optimized for modern browsers.
-
-
-🧑‍💻 Authors
-
-Harsh Saini
-
-Aditya Chauhan
-
-
-🌟 Acknowledgements
-
-Google Fonts — Inter
-
-Google Gemini API — for AI password generation
-
-HTML5, CSS3, and Vanilla JS — for simplicity and performance
+- [Google Fonts](https://fonts.google.com/) - Inter font family
+- [Google Gemini](https://ai.google.dev/) - AI capabilities

@@ -116,7 +116,7 @@ const renderHistory = () => {
   
   let filtered = passwords.filter(p => p.password.toLowerCase().includes(search));
   
-  Sort
+  // Sort
   if (sort === 'newest') filtered.sort((a, b) => b.timestamp - a.timestamp);
   else if (sort === 'oldest') filtered.sort((a, b) => a.timestamp - b.timestamp);
   else if (sort === 'strongest') filtered.sort((a, b) => b.entropy - a.entropy);
@@ -145,7 +145,19 @@ const renderHistory = () => {
   $('pagination').classList.toggle('off', filtered.length <= pageSize);
 };
 
-  
+window.copyHistoryPassword = (idx) => {
+  const pwd = passwords[idx].password;
+  navigator.clipboard.writeText(pwd);
+  toast('Password copied!', 'success');
+};
+
+window.deletePassword = (idx) => {
+  passwords.splice(idx, 1);
+  localStorage.setItem('passwords', JSON.stringify(passwords));
+  renderHistory();
+  toast('Password deleted', 'info');
+};
+
 // Theme
 const setTheme = (theme) => {
   if (theme === 'dark') {
@@ -252,6 +264,34 @@ $('toggleVisibility').onclick = () => {
   out.style.webkitTextSecurity = out.style.webkitTextSecurity === 'disc' ? 'none' : 'disc';
 };
 
+$('clearHistoryBtn').onclick = () => {
+  if (confirm('Clear all password history?')) {
+    passwords = [];
+    localStorage.setItem('passwords', '[]');
+    renderHistory();
+    toast('History cleared', 'info');
+  }
+};
+
+$('prevPage').onclick = () => {
+  if (currentPage > 1) {
+    currentPage--;
+    renderHistory();
+  }
+};
+
+$('nextPage').onclick = () => {
+  currentPage++;
+  renderHistory();
+};
+
+$('historySearch').oninput = () => {
+  currentPage = 1;
+  renderHistory();
+};
+
+$('historySort').onchange = renderHistory;
+
 $('themeBtn').onclick = () => {
   const current = document.documentElement.getAttribute('data-theme');
   setTheme(current === 'dark' ? 'light' : 'dark');
@@ -274,17 +314,12 @@ $('gameInput').oninput = (e) => {
 };
 
 // AI Password Generation (Using Gemini API)
-const GEMINI_API_KEY = 'AIzaSyDe4B41NijJ9GmXx-TkE-I9LAi0cmV2U9s'; // Replace with your actual API key
+const GEMINI_API_KEY = 'AIzaSyD9xtOoVde1y-kKPUT_Hy4Rn5wfXOm8PEk';
 
 $('aiGenerateBtn').onclick = async () => {
   const prompt = $('aiPrompt').value.trim();
   if (!prompt) {
     $('aiError').textContent = 'Please describe the password you want';
-    return;
-  }
-  
-  if (GEMINI_API_KEY === 'AIzaSyDe4B41NijJ9GmXx-TkE-I9LAi0cmV2U9s') {
-    $('aiError').textContent = 'Please add your Gemini API key in the code';
     return;
   }
   
@@ -294,7 +329,7 @@ $('aiGenerateBtn').onclick = async () => {
   show(btn.querySelector('.spin'));
   
   try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -371,6 +406,11 @@ document.onkeydown = (e) => {
     e.preventDefault();
     $('helpModal').showModal();
   }
+};
+
+$('helpModal').querySelector('.close').onclick = () => $('helpModal').close();
+$('helpModal').onclick = (e) => {
+  if (e.target === $('helpModal')) $('helpModal').close();
 };
 
 // Initialize - Force light theme by default
