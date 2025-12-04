@@ -348,6 +348,31 @@ $('aiPrompt').onkeydown = (e) => {
   }
 };
 
+// Keyboard Shortcuts
+document.onkeydown = (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  
+  if (e.key === 'g' || e.key === 'G') {
+    e.preventDefault();
+    $('generateBtn').click();
+  } else if (e.key === 'c' || e.key === 'C') {
+    e.preventDefault();
+    $('copyBtn').click();
+  } else if (e.key === 't' || e.key === 'T') {
+    e.preventDefault();
+    $('themeBtn').click();
+  } else if (e.key === 'h' || e.key === 'H') {
+    e.preventDefault();
+    $('toggleVisibility').click();
+  } else if (e.key === '/') {
+    e.preventDefault();
+    $('historySearch').focus();
+  } else if (e.key === '?') {
+    e.preventDefault();
+    $('helpModal').showModal();
+  }
+};
+
 // Initialize - Force light theme by default
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'dark') {
