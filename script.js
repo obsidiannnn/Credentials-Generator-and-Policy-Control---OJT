@@ -314,7 +314,7 @@ $('gameInput').oninput = (e) => {
 };
 
 // AI Password Generation (Using Gemini API)
-const GEMINI_API_KEY = 'AIzaSyD9xtOoVde1y-kKPUT_Hy4Rn5wfXOm8PEk';
+const GEMINI_API_KEY = 'AIzaSyBsfZRN7rbOscVhvpEX1qs9JElawMo9EwY';
 
 $('aiGenerateBtn').onclick = async () => {
   const prompt = $('aiPrompt').value.trim();
