@@ -273,9 +273,80 @@ $('gameInput').oninput = (e) => {
   }
 };
 
+// AI Password Generation (Using Gemini API)
+const GEMINI_API_KEY = 'AIzaSyDe4B41NijJ9GmXx-TkE-I9LAi0cmV2U9s'; // Replace with your actual API key
 
+$('aiGenerateBtn').onclick = async () => {
+  const prompt = $('aiPrompt').value.trim();
+  if (!prompt) {
+    $('aiError').textContent = 'Please describe the password you want';
+    return;
+  }
+  
+  if (GEMINI_API_KEY === 'AIzaSyDe4B41NijJ9GmXx-TkE-I9LAi0cmV2U9s') {
+    $('aiError').textContent = 'Please add your Gemini API key in the code';
+    return;
+  }
+  
+  $('aiError').textContent = '';
+  const btn = $('aiGenerateBtn');
+  btn.disabled = true;
+  show(btn.querySelector('.spin'));
+  
+  try {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: `Generate a secure password based on this description: "${prompt}". 
+            
+Rules:
+- Return ONLY the password itself, nothing else
+- No explanations, no quotes, no markdown, no extra text
+- Make it secure and match the user's requirements
+- Use a mix of uppercase, lowercase, numbers, and symbols unless they request otherwise
+- Password should be between 12-32 characters`
+          }]
+        }],
+        generationConfig: {
+          temperature: 0.9,
+          maxOutputTokens: 100
+        }
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (data.error) {
+      throw new Error(data.error.message);
+    }
+    
+    const pwd = data.candidates[0].content.parts[0].text.trim()
+      .replace(/```/g, '')
+      .replace(/^["']|["']$/g, '')
+      .split('\n')[0];
+    
+    $('passwordOutput').textContent = pwd;
+    updateStrengthMeter(pwd);
+    $('copyBtn').disabled = false;
+    savePassword(pwd);
+    toast('AI password generated!', 'success');
+  } catch (err) {
+    $('aiError').textContent = `Failed: ${err.message || 'Please check your API key'}`;
+  } finally {
+    btn.disabled = false;
+    hide(btn.querySelector('.spin'));
+  }
+};
 
-
+$('aiPrompt').onkeydown = (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    $('aiGenerateBtn').click();
+  }
+};
 
 // Initialize - Force light theme by default
 const savedTheme = localStorage.getItem('theme');
