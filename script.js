@@ -145,19 +145,7 @@ const renderHistory = () => {
   $('pagination').classList.toggle('off', filtered.length <= pageSize);
 };
 
-window.copyHistoryPassword = (idx) => {
-  const pwd = passwords[idx].password;
-  navigator.clipboard.writeText(pwd);
-  toast('Password copied!', 'success');
-};
-
-window.deletePassword = (idx) => {
-  passwords.splice(idx, 1);
-  localStorage.setItem('passwords', JSON.stringify(passwords));
-  renderHistory();
-  toast('Password deleted', 'info');
-};
-
+  
 // Theme
 const setTheme = (theme) => {
   if (theme === 'dark') {
@@ -263,34 +251,6 @@ $('toggleVisibility').onclick = () => {
   const out = $('passwordOutput');
   out.style.webkitTextSecurity = out.style.webkitTextSecurity === 'disc' ? 'none' : 'disc';
 };
-
-$('clearHistoryBtn').onclick = () => {
-  if (confirm('Clear all password history?')) {
-    passwords = [];
-    localStorage.setItem('passwords', '[]');
-    renderHistory();
-    toast('History cleared', 'info');
-  }
-};
-
-$('prevPage').onclick = () => {
-  if (currentPage > 1) {
-    currentPage--;
-    renderHistory();
-  }
-};
-
-$('nextPage').onclick = () => {
-  currentPage++;
-  renderHistory();
-};
-
-$('historySearch').oninput = () => {
-  currentPage = 1;
-  renderHistory();
-};
-
-$('historySort').onchange = renderHistory;
 
 $('themeBtn').onclick = () => {
   const current = document.documentElement.getAttribute('data-theme');
